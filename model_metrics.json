@@ -1,0 +1,15 @@
+{
+  "train_rows": 3000,
+  "test_rows": 1000,
+  "test_accuracy": 0.77,
+  "test_roc_auc": 0.7964,
+  "churn_rate_test": 0.304,
+  "features": [
+    "tenure_months",
+    "monthly_visits",
+    "avg_spend",
+    "app_sessions_30d",
+    "support_tickets_90d",
+    "sentiment"
+  ]
+}
