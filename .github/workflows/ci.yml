@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  docker-build-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the image (trains the model at build time)
+        run: docker build -t churn-risk-ml-service:ci .
+      - name: Start the service
+        run: docker run -d --name ml-service -p 8000:8000 churn-risk-ml-service:ci
+      - name: Wait for /health
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8000/health > /dev/null; then echo "healthy"; exit 0; fi
+            sleep 2
+          done
+          echo "service did not become healthy"; docker logs ml-service; exit 1
+      - name: Smoke test
+        run: |
+          pip install httpx==0.28.1
+          python smoke_test.py http://localhost:8000 10
+      - name: Container logs (on failure)
+        if: failure()
+        run: docker logs ml-service
