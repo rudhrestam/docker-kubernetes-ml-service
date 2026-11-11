@@ -1,5 +1,7 @@
 # Docker / Kubernetes ML Service (Demo)
 
+![CI](https://github.com/rudhrestam/docker-kubernetes-ml-service/actions/workflows/ci.yml/badge.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 A small ML inference service, packaged the way a production one is: a scikit-learn model trained on synthetic data, served by FastAPI, containerised with a Dockerfile and docker-compose, and deployed with Kubernetes manifests that carry health probes and resource limits.
 
 > ⚠️ **Synthetic data only.** The model trains on generated customer-style features with a fixed seed. No real customer data — anyone's — is used.
@@ -68,7 +70,7 @@ curl -X POST localhost:8000/predict -H 'Content-Type: application/json' \
 
 ## Tech stack
 
-Python · FastAPI · scikit-learn (RandomForest) · uvicorn · Docker · docker-compose · Kubernetes
+Python 3.10+ · FastAPI · scikit-learn (RandomForest) · uvicorn · Docker · docker-compose · Kubernetes
 
 ## What it demonstrates
 
